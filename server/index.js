@@ -1,5 +1,15 @@
+try {
+  require('../env.js');
+}
+catch(ex){
+  console.log('running locally? add an env.js file with client_id and client_secret');
+  console.log('deploying? add a client_id and client_secret environment variable');
+  console.log(ex);
+}
+console.log(process.env.client_secret);
 const port = process.env.PORT || 3000;
 const app = require('./app');
+app.engine('html', require('ejs').renderFile);
 const { conn, Product, User } = require('./db');
 
 app.listen(port, async()=> {

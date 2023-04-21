@@ -11,7 +11,9 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')))
 
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'))
+  res.render(
+    path.join(__dirname, '../public/index.html'),
+    { client_id : process.env.client_id });
 }); 
 
 app.get('/api/products', async(req, res, next)=> {

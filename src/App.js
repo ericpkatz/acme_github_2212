@@ -21,8 +21,7 @@ const App = ()=> {
       <Link to='/products'>Products ({ products.length })</Link>
       {
         !auth.id ? <div>
-          <Link to='/login'>Login</Link>
-          <Link to='/register'>Register</Link>
+          <a href={`https://github.com/login/oauth/authorize?client_id=${window.client_id}`}>Login With Github</a>
           </div> :
           <div>
           <button onClick={ ()=> dispatch(logout())}>Logout {auth.username } Your lucky number is { auth.luckyNumber }</button>
