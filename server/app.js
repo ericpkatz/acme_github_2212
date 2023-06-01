@@ -13,7 +13,12 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')))
 app.get('/', (req, res) => {
   res.render(
     path.join(__dirname, '../public/index.html'),
-    { client_id : process.env.client_id });
+    {
+      client_id : process.env.client_id,
+      facebook_client_id : process.env.facebook_client_id,
+      facebook_redirect_uri : process.env.facebook_redirect_uri,
+
+    });
 }); 
 
 app.get('/api/products', async(req, res, next)=> {

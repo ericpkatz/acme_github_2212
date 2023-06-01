@@ -22,6 +22,7 @@ const App = ()=> {
       {
         !auth.id ? <div>
           <a href={`https://github.com/login/oauth/authorize?client_id=${window.client_id}`}>Login With Github</a>
+          <a href={`https://www.facebook.com/v17.0/dialog/oauth?client_id=${window.facebook_client_id}&redirect_uri=${window.facebook_redirect_uri}/api/auth/facebook`}>Login With Facebook</a>
           </div> :
           <div>
           <button onClick={ ()=> dispatch(logout())}>Logout {auth.username } Your lucky number is { auth.luckyNumber }</button>

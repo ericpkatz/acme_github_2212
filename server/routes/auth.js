@@ -49,6 +49,21 @@ app.get('/github', async(req, res, next)=> {
   }
 });
 
+app.get('/facebook', async(req, res, next)=> {
+  try{
+    const { token } = await User.authenticateFacebook(req.query.code);
+    res.send(`
+      <script>
+        window.localStorage.setItem('token', '${ token }');
+        window.location = '/';
+      </script>
+    `);
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+
 app.get('/:token', async(req, res, next)=> {
   try{
     res.send(await User.findByToken(req.params.token));

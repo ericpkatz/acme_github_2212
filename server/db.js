@@ -21,6 +21,14 @@ const User = conn.define('user', {
     type: STRING,
     unique: true
   },
+  facebook_id: {
+    type: STRING,
+    unique: true
+  },
+  facebook_username: {
+    type: STRING,
+    unique: true
+  },
   luckyNumber: {
     type: INTEGER,
     allowNull: false,
@@ -71,6 +79,32 @@ User.authenticateGithub = async function(code){
   if(!user){
     user = await User.create({
       username: login
+    });
+  }
+  return user.generateToken();
+}
+
+User.authenticateFacebook = async function(code){
+  let response = await axios.get(
+    `https://graph.facebook.com/v17.0/oauth/access_token?client_id=${process.env.facebook_client_id}&client_secret=${process.env.facebook_client_secret}&code=${code}&redirect_uri=${process.env.facebook_redirect_uri}/api/auth/facebook`
+  );
+  if(response.data.error){
+    const error = Error(response.data.error);
+    error.status = 401;
+    throw error;
+  }
+  response = await axios.get(
+    `https://graph.facebook.com/me?access_token=${response.data.access_token}`);
+  const id = response.data.id;
+  let user = await User.findOne({
+    where: {
+      facebook_id: id
+    }
+  });
+  if(!user){
+    user = await User.create({
+      facebook_id: id,
+      facebook_username: response.data.name 
     });
   }
   return user.generateToken();

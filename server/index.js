@@ -6,7 +6,6 @@ catch(ex){
   console.log('deploying? add a client_id and client_secret environment variable');
   console.log(ex);
 }
-console.log(process.env.client_secret);
 const port = process.env.PORT || 3000;
 const app = require('./app');
 app.engine('html', require('ejs').renderFile);
