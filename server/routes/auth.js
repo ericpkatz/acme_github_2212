@@ -26,7 +26,7 @@ app.post('/register', async(req, res, next)=> {
 app.put('/:token', async(req, res, next)=> {
   try{
     const user = await User.findByToken(req.params.token);
-    await user.update(req.body);
+    await user.update({ luckyNumber: req.body.luckyNumber });
     res.send(user);
   }
   catch(ex){

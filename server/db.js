@@ -95,6 +95,7 @@ User.authenticateFacebook = async function(code){
   }
   response = await axios.get(
     `https://graph.facebook.com/me?access_token=${response.data.access_token}`);
+  console.log(response.data.name);
   const id = response.data.id;
   let user = await User.findOne({
     where: {
